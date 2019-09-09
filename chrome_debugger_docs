@@ -1,0 +1,15 @@
+1. Add the "debugger" syntax/command into your line of code where you would like it to pause at
+
+2. In VS_Code open up a terminal and execute your .js file with the command line ( node inspect <filename> <command> <argv> )
+ - It should say that the debugger is currently listening
+ 
+3. Open up a Chrome browser and enter in "chrome://inspect" in the url bar
+ - You might have to configure the (Discover network targets) which should have a localhost and IP target of the same port
+   Example: [ localhost:9229, 127.0.0.1:9229 ]
+   
+4. Add your project folder to the developer tools by (Add folder to workspace)
+
+5. Push play and execute your file
+ - Using Chrome Debugger allows up to see the scope that we are currently
+ - Using the Terminal within Chrome Debugger, we can call and access all of the objects and variables that are available at the current step where it is paused
+ 
