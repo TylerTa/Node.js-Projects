@@ -1,31 +1,6 @@
 const fs = require('fs');
 const chalk = require("chalk");
 
-const listNotes = () => {
-    const arraylist_notes = loadNotes();
-
-    console.log(chalk.inverse("Your notes..."));
-
-    arraylist_notes.forEach((note) => {
-        console.log(note.title)
-    });
-}
-
-const readNote = (title) => {
-    const arrayList_notes = loadNotes();
-
-    const note_found = arrayList_notes.find((note) => note.title === title);
-
-    if (note_found) {
-        console.log(chalk.inverse.green(`Title: ${note_found.title}`));
-        console.log(`Body: ${note_found.body}`);
-    }else {
-        console.log(chalk.inverse.red(`Error, could not find note with title: ${title}`));
-    }
-
-}
-
-
 const addNote = (title, body) => {
     const notes = loadNotes();
 
@@ -35,6 +10,8 @@ const addNote = (title, body) => {
     // Note: .find() iterate through an array and stop after it found a match/duplicate note.title
     // - This will return an 'undefinded' if nothing/no title match was found
     const duplicateNote =  notes.find((note) => note.title === title);
+
+    debugger
 
     // Note: duplicateNote return true if it found a match, so we use the logical "NOT Operator" going into the function when duplicatNotes is 'false' or 'undefinded'
     if (!duplicateNote) {
@@ -77,6 +54,30 @@ const removeNote = (title) => {
         console.log(chalk.redBright.inverse("No note found!"));
     }
 };
+
+const listNotes = () => {
+    const arraylist_notes = loadNotes();
+
+    console.log(chalk.inverse("Your notes..."));
+
+    arraylist_notes.forEach((note) => {
+        console.log(note.title)
+    });
+}
+
+const readNote = (title) => {
+    const arrayList_notes = loadNotes();
+
+    const note_found = arrayList_notes.find((note) => note.title === title);
+
+    if (note_found) {
+        console.log(chalk.inverse.green(`Title: ${note_found.title}`));
+        console.log(`Body: ${note_found.body}`);
+    }else {
+        console.log(chalk.inverse.red(`Error, could not find note with title: ${title}`));
+    }
+
+}
 
 /**
  * @saveNotes 
