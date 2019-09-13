@@ -11,8 +11,6 @@ const addNote = (title, body) => {
     // - This will return an 'undefinded' if nothing/no title match was found
     const duplicateNote =  notes.find((note) => note.title === title);
 
-    debugger
-
     // Note: duplicateNote return true if it found a match, so we use the logical "NOT Operator" going into the function when duplicatNotes is 'false' or 'undefinded'
     if (!duplicateNote) {
         //Pushing an 'Object' onto the array of notes.
