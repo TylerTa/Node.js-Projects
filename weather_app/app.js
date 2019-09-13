@@ -12,6 +12,8 @@
 //  - Change Language (English -> French), 
 //  - Change Unit (Farenheit -> Celsius)
 
+// ep33. 
+
 
 /*******************
  * Core Modules
@@ -28,7 +30,7 @@ const request = require('request');
 
  // NOTE: Reference Dark Sky API for 'Forecast Request' 
  //     - Request Parameter/Query String within the URL
-const url = 'https://api.darksky.net/forecast/e06aa10d90db16967f763aa7780de9a5/37.8267,-122.4233?lang=es'
+const url = 'https://api.darksky.net/forecast/e06aa10d90db16967f763aa7780de9a5/37.8267,-122.4233?'
 
 // Goal: Print a small forcast to the user
 // 1. Print: "It is currently 58.55 degrees out. There is a 0% chance of rain."
@@ -37,10 +39,7 @@ const url = 'https://api.darksky.net/forecast/e06aa10d90db16967f763aa7780de9a5/3
 // - Option Object (reference DarkSky Documentation)
 // - Function: This is the function takes in 2 argv (error, response) to run when we get a response back
 request({ url: url, json: true }, (error, response) => {
-    // console.log(response);
-    // const data = JSON.parse(response.body);
-    // console.log(data.currently);
-    // console.log(response.body.currently);
+
     const current_weather_object = response.body.currently;
     const daily_weather = response.body.daily;
 
@@ -48,3 +47,24 @@ request({ url: url, json: true }, (error, response) => {
 });
 
 
+// NOTE: Reference MapBox.com for 'Forward Geocoding' API endpoint & requests "https://docs.mapbox.com/api/search/#forward-geocoding"
+// - Summary: An API Endpoint that convert an Address to Lat&Longitude Coordinates and return a response body of JSON
+// - GET example: /geocodoing/v5/{endpoint}/{search_text}.json?{access_token}&{limit}
+// - API URL: https://https://api.mapbox.com/geocoding/v5/
+// - Required Parameter {
+// -    Endpoint: /mapbox.places/
+// -    search_text: Los%20Angeles.json
+// -    ?access_token=pk.eyJ1Ijoic29nZ3ljcm91dG9uIiwiYSI6ImNrMGhuMGswODAyNnozY3A3bTFuOWR3NmsifQ.7YrIM0_X4thlnExHIBxOUA
+//   }
+// - Optional Parameter { &limit=1 }
+const mapBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1Ijoic29nZ3ljcm91dG9uIiwiYSI6ImNrMGhuMGswODAyNnozY3A3bTFuOWR3NmsifQ.7YrIM0_X4thlnExHIBxOUA&limit=1'
+
+request({url: mapBoxURL, json: true}, (error, response) => {
+    const locationName = response.body.features[0].text;
+    const longitude = response.body.features[0].center[0];
+    const latitude = response.body.features[0].center[1];
+
+    console.log(`Location: ${locationName}`);
+    console.log(`Longitude: ${longitude}`);
+    console.log(`Latitude: ${latitude}`);
+});
