@@ -39,11 +39,17 @@ const url = 'https://api.darksky.net/forecast/e06aa10d90db16967f763aa7780de9a5/3
 // - Option Object (reference DarkSky Documentation)
 // - Function: This is the function takes in 2 argv (error, response) to run when we get a response back
 request({ url: url, json: true }, (error, response) => {
+    if (error) {
+        console.log('Unable to connect to weather service!');
+        // console.log(error);
+    } else if (response.body.error) {
+        console.log('Unable to find location');
+    } else {
+        const current_weather_object = response.body.currently;
+        const daily_weather = response.body.daily;
 
-    const current_weather_object = response.body.currently;
-    const daily_weather = response.body.daily;
-
-    console.log(`${daily_weather.data[0].summary} It is currently ${current_weather_object.temperature} degrees out. There is ${current_weather_object.precipProbability}% chance of rain`);
+        console.log(`${daily_weather.data[0].summary} It is currently ${current_weather_object.temperature} degrees out. There is ${current_weather_object.precipProbability}% chance of rain`);
+    }
 });
 
 
@@ -63,6 +69,7 @@ request({url: mapBoxURL, json: true}, (error, response) => {
     const locationName = response.body.features[0].text;
     const longitude = response.body.features[0].center[0];
     const latitude = response.body.features[0].center[1];
+    console.log(longitude, latitude);
 
     console.log(`Location: ${locationName}`);
     console.log(`Longitude: ${longitude}`);
