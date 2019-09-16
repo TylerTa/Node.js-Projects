@@ -12,7 +12,10 @@
 //  - Change Language (English -> French), 
 //  - Change Unit (Farenheit -> Celsius)
 
-// ep33. 
+// ep33. HTTP Request Challenge:
+// - Implementing another API from mapbox.com
+
+// ep34. Handling API/HTTPS request error
 
 
 /*******************
