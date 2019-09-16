@@ -38,19 +38,19 @@ const url = 'https://api.darksky.net/forecast/e06aa10d90db16967f763aa7780de9a5/3
 // NOTE: the request() function takes in 2 argv
 // - Option Object (reference DarkSky Documentation)
 // - Function: This is the function takes in 2 argv (error, response) to run when we get a response back
-request({ url: url, json: true }, (error, response) => {
-    if (error) {
-        console.log('Unable to connect to weather service!');
-        // console.log(error);
-    } else if (response.body.error) {
-        console.log('Unable to find location');
-    } else {
-        const current_weather_object = response.body.currently;
-        const daily_weather = response.body.daily;
+// request({ url: url, json: true }, (error, response) => {
+//     if (error) {
+//         console.log('Unable to connect to weather service!');
+//         // console.log(error);
+//     } else if (response.body.error) {
+//         console.log('Unable to find location');
+//     } else {
+//         const current_weather_object = response.body.currently;
+//         const daily_weather = response.body.daily;
 
-        console.log(`${daily_weather.data[0].summary} It is currently ${current_weather_object.temperature} degrees out. There is ${current_weather_object.precipProbability}% chance of rain`);
-    }
-});
+//         console.log(`${daily_weather.data[0].summary} It is currently ${current_weather_object.temperature} degrees out. There is ${current_weather_object.precipProbability}% chance of rain`);
+//     }
+// });
 
 
 // NOTE: Reference MapBox.com for 'Forward Geocoding' API endpoint & requests "https://docs.mapbox.com/api/search/#forward-geocoding"
@@ -65,13 +65,28 @@ request({ url: url, json: true }, (error, response) => {
 // - Optional Parameter { &limit=1 }
 const mapBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1Ijoic29nZ3ljcm91dG9uIiwiYSI6ImNrMGhuMGswODAyNnozY3A3bTFuOWR3NmsifQ.7YrIM0_X4thlnExHIBxOUA&limit=1'
 
-request({url: mapBoxURL, json: true}, (error, response) => {
-    const locationName = response.body.features[0].text;
-    const longitude = response.body.features[0].center[0];
-    const latitude = response.body.features[0].center[1];
-    console.log(longitude, latitude);
+// Challenge: API/Http Request Error Handeling
+// Goal: Handle errors for geocoding API request
+// 1. Setup an error handler for low-level errors
+// 2. Test by disabliong for no matching results
+// 3. Setup error handling for no matching results :Hint going to a response body and compare the different in the success response vs. error response (Answer: response.body.features[] is empty user input an incorrect location)
+// 4. Test by altering the search term and running the app
 
-    console.log(`Location: ${locationName}`);
-    console.log(`Longitude: ${longitude}`);
-    console.log(`Latitude: ${latitude}`);
+request({url: mapBoxURL, json: true}, (error, response) => {
+
+    if (error) {
+        // console.log(error);
+        console.log('Unable to connect to mapbox API service. (connection issue)');
+    } else if (response.body.features.length === 0) {
+        console.log('Unable to find location, try again with a different search term');
+    } else {
+        const locationName = response.body.features[0].text;
+        const longitude = response.body.features[0].center[0];
+        const latitude = response.body.features[0].center[1];
+        console.log(longitude, latitude);
+
+        console.log(`Location: ${locationName}`);
+        console.log(`Longitude: ${longitude}`);
+        console.log(`Latitude: ${latitude}`);
+    }
 });
