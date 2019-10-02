@@ -46,13 +46,21 @@ const forecast = require('./utils/forecast');
  // 3. Only geocode if a location was provided
  // 3. Test your work with a couple of locations
 
+ /**
+  * Ep40: Destructuring and Property Shorthand Challenge
+  * Goal: Use both destructuring and property shorthand in weather app
+  * 1. Use destructuring in app.js, forecast.js, and geocode.js
+  * 2. Use property shorthand in forecast.js and geocode.js
+  * 3. Test your work and ensure app still works
+  */
+
 //  console.log(process.argv);
  const address = process.argv[2];
 
 if (!address) {
     console.log('Please provide an address');
 } else {
-    geocode(address, (error, data) => {
+    geocode(address, (error, {longitude, latitude, location}) => {
 
         // NOTE: For error handeling you can wrap it in a conditional statement to execute only if error is not true
         // - But because we use a 'return' statement in the within the 'if conditional' statement, 
@@ -62,7 +70,7 @@ if (!address) {
         } 
     
         // Example/Test Sample Call
-        forecast(data.longitude, data.latitude, (error, forecastData) => {
+        forecast(longitude, latitude, (error, forecastData) => {
             if (error) {
                 return console.log(error)
             } 
@@ -71,7 +79,7 @@ if (!address) {
             // - If error did not return for geocode() or forecast() 
             // - Then process the final result
             //    Goal: Print the location property from geocode() and print the forecast from forecast();
-            console.log(data.location);
+            console.log(location);
             console.log(forecastData);
         });
     });
