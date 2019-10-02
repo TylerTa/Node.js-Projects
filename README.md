@@ -1,5 +1,4 @@
-# Node.js Courses
-Project Files that I've have completed while going through my Node.js online course.
+# Node.js Projects
 
 These Projects are heavily commented to:
 * Note the nuance/weird part of Node.js
